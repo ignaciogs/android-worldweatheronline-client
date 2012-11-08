@@ -124,6 +124,37 @@ WorldWeatherOnlineApiProvider.getClient().query(new ContextAwareAPIDelegate<Worl
 }, ApiKey, 1, Query.latLng(48.85, 2.35));
 ```
 
+Example with Android LocationManager
+
+```java
+....
+private LocationManager locationManager;
+....
+locationManager = (LocationManager) this.getSystemService(getApplicationContext().LOCATION_SERVICE);
+Criteria locationCriteria = new Criteria();
+locationManager.requestLocationUpdates(locationManager.getBestProvider(locationCriteria, true), 0, 20, locationListener);
+....
+LocationListener locationListener = new LocationListener() {
+     public void onLocationChanged(Location location) {
+          WorldWeatherOnlineApiProvider.getClient().query(new ContextAwareAPIDelegate<WorldWeatherOnlineResponse>(MyActivity.this,
+                    WorldWeatherOnlineResponse.class, RequestCache.LoadPolicy.NEVER, RequestCache.StoragePolicy.DISABLED) {
+               @Override
+               public void onResults(WorldWeatherOnlineResponse worldWeatherOnlineResponse) {
+                    Toast.makeText(MyActivity.this, worldWeatherOnlineResponse.getData().getCurrentConditionList().get(0).getWeatherDesc().get(0).getValue(), Toast.LENGTH_LONG).show();
+               }
+
+               @Override
+               public void onError(Throwable e) {
+
+               }
+          }, ApiKey, 1, Query.latLng(location.getLatitude(), location.getLongitude()));
+     }
+
+     ....
+};
+....
+```
+
 
 # License
 
