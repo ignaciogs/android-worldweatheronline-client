@@ -45,7 +45,85 @@ You can get the releases, snapshots and other forms in which Android-worldweathe
 
 # Usage
 
-Comming soon!
+This library has a single method called "query". This method returns a WorldWeatherOnlineResponse class with all of the data from the World Weather Online API.
+
+```java
+void query(APIDelegate<WorldWeatherOnlineResponse> delegate,
+           String apiKey,
+           int numberOfDays,
+           Query query);
+```
+
+## Parameters
+
+### ApiKey
+
+Your API key for World Weather Online API. [Get one here](http://www.worldweatheronline.com/register.aspx)
+
+### numberOfDays
+
+Changes the number of day forecast you need (For free API users it is maximum 3)
+
+### query
+
+ The location for which you want weather information
+
+City and Country name
+ ```java
+Query.cityCountry("Sydney", "Australia");
+```
+
+IP address
+```java
+Query.ipAddress("101.25.32.325");
+```
+
+UK or Canada Postal Code or US Zipcode
+```java
+Query.zipCode("90201");
+```
+
+Latitude,Longitude
+```java
+Query.latLng(48.834, 2.394);
+```
+
+## Examples of use
+
+In this example we are going to retreive 3 day weather by UK Postcode SW1
+
+```java
+WorldWeatherOnlineApiProvider.getClient().query(new ContextAwareAPIDelegate<WorldWeatherOnlineResponse>(MyActivity.this,
+          WorldWeatherOnlineResponse.class, RequestCache.LoadPolicy.NEVER, RequestCache.StoragePolicy.DISABLED) {
+     @Override
+     public void onResults(WorldWeatherOnlineResponse worldWeatherOnlineResponse) {
+           Toast.makeText(MyActivity.this, worldWeatherOnlineResponse.getData().getCurrentConditionList().get(0).getWeatherDesc().get(0).getValue(), Toast.LENGTH_LONG).show();
+     }
+
+     @Override
+     public void onError(Throwable e) {
+
+     }
+}, ApiKey, 3, Query.zipCode("SW1"));
+```
+
+In this example we are going to retreive conditions for 1 day for Latitude 48.85 and Longitude 2.35 (Paris, France)
+
+```java
+WorldWeatherOnlineApiProvider.getClient().query(new ContextAwareAPIDelegate<WorldWeatherOnlineResponse>(MyActivity.this,
+          WorldWeatherOnlineResponse.class, RequestCache.LoadPolicy.NEVER, RequestCache.StoragePolicy.DISABLED) {
+     @Override
+     public void onResults(WorldWeatherOnlineResponse worldWeatherOnlineResponse) {
+          Toast.makeText(MyActivity.this, worldWeatherOnlineResponse.getData().getCurrentConditionList().get(0).getWeatherDesc().get(0).getValue(), Toast.LENGTH_LONG).show();
+     }
+
+     @Override
+     public void onError(Throwable e) {
+
+     }
+}, ApiKey, 1, Query.latLng(48.85, 2.35));
+```
+
 
 # License
 
