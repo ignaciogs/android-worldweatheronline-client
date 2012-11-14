@@ -58,15 +58,15 @@ void query(APIDelegate<WorldWeatherOnlineResponse> delegate,
 
 ### ApiKey
 
-Your API key for World Weather Online API. [Get one here](http://www.worldweatheronline.com/register.aspx)
+API key for the World Weather Online API. [Get one here](http://www.worldweatheronline.com/register.aspx)
 
 ### numberOfDays
 
-Changes the number of day forecast you need (For free API users it is maximum 3)
+Changes the number of day forecast you need (Max 3 For free API users)
 
 ### query
 
- The location for which you want weather information
+ The location for which you want information
 
 City and Country name
  ```java
@@ -90,7 +90,7 @@ Query.latLng(48.834, 2.394);
 
 ## Examples of use
 
-In this example we are going to retreive 3 day weather by UK Postcode SW1
+In this example we are going to retreive 3 day weather forecasts by UK Postcode SW1
 
 ```java
 WorldWeatherOnlineApiProvider.getClient().query(new ContextAwareAPIDelegate<WorldWeatherOnlineResponse>(MyActivity.this,
@@ -107,7 +107,7 @@ WorldWeatherOnlineApiProvider.getClient().query(new ContextAwareAPIDelegate<Worl
 }, ApiKey, 3, Query.zipCode("SW1"));
 ```
 
-In this example we are going to retreive conditions for 1 day for Latitude 48.85 and Longitude 2.35 (Paris, France)
+In this example we are going to retreive forecast conditions for 1 day on Latitude 48.85 and Longitude 2.35 (Paris, France)
 
 ```java
 WorldWeatherOnlineApiProvider.getClient().query(new ContextAwareAPIDelegate<WorldWeatherOnlineResponse>(MyActivity.this,
